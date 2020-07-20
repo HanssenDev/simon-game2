@@ -18,6 +18,7 @@ document.addEventListener("keydown", function() {
 });
 
 function nextSequence() {
+    userClickedPattern = [];
     level++;
     title.innerText = "Level " + level;
 
@@ -31,8 +32,11 @@ function nextSequence() {
     // Store random colour element in a variable
     let randomButton = document.querySelector("#" + randomChosenColour);
     
-    flashButton(randomButton);
-    playSound(randomChosenColour);
+    setTimeout( function() {
+        flashButton(randomButton);
+        playSound(randomChosenColour);
+    }, 500);
+    
 }
 
 // Store all buttons in an array
@@ -46,10 +50,12 @@ for (i = 0; i < buttons.length; i++) {
         let userChosenColour = this.getAttribute("id");
         userClickedPattern.push(userChosenColour);
         
+        // Flash and play a sound when the user clicks a button
         flashButton(this);
         playSound(userChosenColour);
 
-        checkAnswer(userClickedPattern[userClickedPattern.length-1]);
+        // Check if the user's pattern matches the game's pattern
+        checkAnswer(userClickedPattern.length-1);
     })
 }
 
@@ -66,25 +72,32 @@ function flashButton(currentColour) {
 }
 
 function checkAnswer (currentLevel) {
-    if (userClickedPattern[userClickedPattern.length-1] === gamePattern[gamePattern.length-1]) {
-        console.log("Success!");
+
+    // If the patterns match, then start the next sequence
+    if (userClickedPattern[currentLevel] === gamePattern[currentLevel]) {
         if (userClickedPattern.length === gamePattern.length) {
             setTimeout( function() {
                 nextSequence();
             }, 1000);
-            userClickedPattern = [];
         }
         
+    // If the patterns don't match, then start over
     } else {
-        title.innerText = "Game Over!";
-        userClickedPattern = [];
+        title.innerText = "Game Over! Press Any Key to Restart";
+
+        // Play a sound
+        let wrongSound = new Audio("sounds/wrong.mp3");
+        wrongSound.play();
+
+        // The page will flash red
+        document.querySelector("body").classList.add("game-over");
+        setTimeout( function() {
+            document.querySelector("body").classList.remove("game-over");
+        }, 200);
+
+        // Game values are reset
+        gameStarted = false;
+        level = 0;
         gamePattern = [];
     } 
 }
-
-
-
-
-
-
-
