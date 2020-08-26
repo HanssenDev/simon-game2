@@ -12,7 +12,7 @@ body {
 
 .container {
   display: block;
-  width: 50%;
+  width: 100%;
   margin: auto;
 }
 
@@ -23,6 +23,19 @@ body {
   width: 200px;
   border: 10px solid black;
   border-radius: 20%;
+}
+
+@media all and (max-width: 35em) {
+  .btn {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media all and (max-width: 22.5em) {
+  .btn {
+    margin: 10px;
+  }
 }
 
 .game-over {
