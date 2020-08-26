@@ -40,9 +40,9 @@ function nextSequence() {
 // Store all buttons in an array
 const buttons = document.querySelectorAll(".btn");
 
-// Loop through the buttons array and add a click event listener
+// Loop through the buttons array and add a click and touch event listener
 for (i = 0; i < buttons.length; i++) {
-  buttons[i].addEventListener("click", function () {
+  buttons[i].addEventListener("click touchstart", function () {
     // Get ID of button clicked and push to userClickedPattern array
     let userChosenColour = this.getAttribute("id");
     userClickedPattern.push(userChosenColour);
