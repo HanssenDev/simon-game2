@@ -9,7 +9,15 @@ let level = 0;
 let title = document.getElementById("level-title");
 
 // Start the next sequence when a key is pressed
-document.addEventListener("keydown touchstart", function () {
+document.addEventListener("keydown", function () {
+  if (!gameStarted) {
+    nextSequence();
+    gameStarted = true;
+  }
+});
+
+// Start the next sequence when a key is pressed
+document.addEventListener("touchstart", function () {
   if (!gameStarted) {
     nextSequence();
     gameStarted = true;
@@ -40,14 +48,30 @@ function nextSequence() {
 // Store all buttons in an array
 const buttons = document.querySelectorAll(".btn");
 
-// Loop through the buttons array and add a click and touch event listener
+// Loop through the buttons array and add a click listener
 for (i = 0; i < buttons.length; i++) {
-  buttons[i].addEventListener("click touchstart", function () {
+  buttons[i].addEventListener("click", function () {
     // Get ID of button clicked and push to userClickedPattern array
     let userChosenColour = this.getAttribute("id");
     userClickedPattern.push(userChosenColour);
 
     // Flash and play a sound when the user clicks a button
+    flashButton(this);
+    playSound(userChosenColour);
+
+    // Check if the user's pattern matches the game's pattern
+    checkAnswer(userClickedPattern.length - 1);
+  });
+}
+
+// Loop through the buttons array and add a touch listener
+for (i = 0; i < buttons.length; i++) {
+  buttons[i].addEventListener("touchstart", function () {
+    // Get ID of button clicked and push to userClickedPattern array
+    let userChosenColour = this.getAttribute("id");
+    userClickedPattern.push(userChosenColour);
+
+    // Flash and play a sound when the user touches a button
     flashButton(this);
     playSound(userChosenColour);
 
