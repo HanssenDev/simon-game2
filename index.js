@@ -9,7 +9,7 @@ let level = 0;
 let title = document.getElementById("level-title");
 
 // Start the next sequence when a key is pressed
-document.addEventListener("keydown", function () {
+document.addEventListener("keydown touchstart", function () {
   if (!gameStarted) {
     nextSequence();
     gameStarted = true;
